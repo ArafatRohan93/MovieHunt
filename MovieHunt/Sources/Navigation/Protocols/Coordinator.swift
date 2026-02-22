@@ -5,6 +5,7 @@
 //  Created by Arafat Rohan Vivasoft on 17/2/26.
 //
 
+@MainActor
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
 

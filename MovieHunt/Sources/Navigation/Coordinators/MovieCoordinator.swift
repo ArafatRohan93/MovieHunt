@@ -18,13 +18,32 @@ final class MovieCoordinator: Coordinator {
     }
 
     func start() {
-        let listView = Text("Movie List Screen")
+
+        // 1. Create dependencies
+        let movieRepository = MovieRepository()
+        let viewModel = MoviesViewModel(movieRepository: movieRepository)
+
+        // 2. Create the view with a selection callback
+        let listView = MovieListView(viewModel: viewModel) {
+            [weak self] movie in
+            self?.showMovieDetails(for: movie)
+        }
+
+        // 3. Hosting it in UI Kit
+
         let hostingController = UIHostingController(rootView: listView)
         hostingController.title = "Movies"
 
         navigationController.pushViewController(
             hostingController,
             animated: false
+        )
+    }
+
+    func showMovieDetails(for movie: Movie) {
+        AppLogger.log(
+            "Navigating to details for: \(movie.title)",
+            category: .navigation
         )
     }
 }

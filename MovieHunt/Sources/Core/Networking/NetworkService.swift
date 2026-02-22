@@ -8,15 +8,15 @@
 import Foundation
 internal import os
 
-protocol NetworkServiceProtocol {
+protocol NetworkServiceProtocol : Sendable{
     func request<T: Decodable>(_ endpoint: APIEndpoint) async throws -> T
 }
 
-final class NetworkService: NetworkServiceProtocol {
+final class NetworkService: NetworkServiceProtocol, @unchecked Sendable {
 
     private let session: URLSession
 
-    init(session: URLSession = .shared) {
+    nonisolated init(session: URLSession = .shared) {
         self.session = session
     }
 
