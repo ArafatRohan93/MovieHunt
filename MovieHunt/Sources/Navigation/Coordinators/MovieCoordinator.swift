@@ -45,5 +45,14 @@ final class MovieCoordinator: Coordinator {
             "Navigating to details for: \(movie.title)",
             category: .navigation
         )
+        
+        let viewModel = MovieDetailsViewModel(movieID: movie.id)
+        
+        let view = MovieDetailsView(viewModel: viewModel)
+        
+        let hostingController = UIHostingController(rootView: view)
+        
+        navigationController.pushViewController(hostingController, animated: false)
+        
     }
 }
