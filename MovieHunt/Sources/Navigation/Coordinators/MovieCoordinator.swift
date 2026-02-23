@@ -21,7 +21,12 @@ final class MovieCoordinator: Coordinator {
 
         // 1. Create dependencies
         let movieRepository = MovieRepository()
-        let viewModel = MoviesViewModel(movieRepository: movieRepository)
+        let favoritesRepository = FavoritesRepository()
+
+        let viewModel = MoviesViewModel(
+            movieRepository: movieRepository,
+            favoriteRepository: favoritesRepository
+        )
 
         // 2. Create the view with a selection callback
         let listView = MovieListView(viewModel: viewModel) {
@@ -45,14 +50,22 @@ final class MovieCoordinator: Coordinator {
             "Navigating to details for: \(movie.title)",
             category: .navigation
         )
-        
-        let viewModel = MovieDetailsViewModel(movieID: movie.id)
-        
+
+        let movieRepository = MovieRepository()
+
+        let viewModel = MovieDetailsViewModel(
+            movieID: movie.id,
+            repository: movieRepository
+        )
+
         let view = MovieDetailsView(viewModel: viewModel)
-        
+
         let hostingController = UIHostingController(rootView: view)
-        
-        navigationController.pushViewController(hostingController, animated: false)
-        
+
+        navigationController.pushViewController(
+            hostingController,
+            animated: false
+        )
+
     }
 }

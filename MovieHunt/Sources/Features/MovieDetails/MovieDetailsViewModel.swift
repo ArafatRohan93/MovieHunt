@@ -19,7 +19,7 @@ final class MovieDetailsViewModel: ObservableObject {
     private let movieID: Int
     private let repository: MovieRepositoryProtocol
 
-    init(movieID: Int, repository: MovieRepositoryProtocol = MovieRepository())
+    init(movieID: Int, repository: MovieRepositoryProtocol)
     {
         self.movieID = movieID
         self.repository = repository

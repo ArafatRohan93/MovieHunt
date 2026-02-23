@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct MovieHuntApp: App {
@@ -18,6 +19,7 @@ struct MovieHuntApp: App {
                 configureCoordinator()
             }
         }
+        .modelContainer(for: FavoriteRecord.self)
     }
 
     private func configureCoordinator() {
