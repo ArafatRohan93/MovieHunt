@@ -8,5 +8,5 @@
 protocol FavoritesRepositoryProtocol: Sendable {
     func isFavorite(movieID: Int) async throws -> Bool
     func toggleFavorite(movie: Movie) async
-    func fetchFavorites() async -> [Movie]
+    func fetchFavorites() async throws -> [Movie]
 }

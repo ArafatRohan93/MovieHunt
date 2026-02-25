@@ -84,10 +84,22 @@ struct MovieDetailsView: View {
                 }
             }
         }
-        .navigationBarTitleDisplayMode(.large)
-        .task {
-            await viewModel.loadDetails()
-        }
+        .navigationBarItems(
+            trailing: Button(action: {
+                Task { await viewModel.toggleFavorite() }
+            }) {
+                Image(
+                    systemName: viewModel.isFavorite ? "heart.fill" : "heart"
+                )
+                
+            }
+            .foregroundStyle(Color(viewModel.isFavorite ? .green : .black))
+            .navigationBarTitleDisplayMode(.large)
+            .navigationTitle("Details")
+            .task {
+                await viewModel.loadDetails()
+            }
+        )
 
     }
 }

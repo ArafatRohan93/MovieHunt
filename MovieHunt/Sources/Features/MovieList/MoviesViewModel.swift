@@ -50,12 +50,7 @@ final class MoviesViewModel: ObservableObject {
             )
         } catch {
             isLoading = false
-            self.errorMessage = "Faied to load movies. Please try again"
-            AppLogger.log(
-                "ViewModel Error: Failed to load movies with error: \(error)",
-                category: .business,
-                level: OSLogType.error
-            )
+            self.handleError(error)
         }
 
         await refreshFavorites()
@@ -63,13 +58,24 @@ final class MoviesViewModel: ObservableObject {
     }
 
     func refreshFavorites() async {
-        let favs = await favoriteRepository.fetchFavorites()
-        self.favorites = Set(favs.map { $0.id })
+        if let favs = try? await favoriteRepository.fetchFavorites() {
+            self.favorites = Set(favs.map { $0.id })
+        }
+
     }
-    
-    func toggleFavorite(movie: Movie) async{
+
+    func toggleFavorite(movie: Movie) async {
         await favoriteRepository.toggleFavorite(movie: movie)
         await refreshFavorites()
+    }
+
+    private func handleError(_ error: Error) {
+        self.errorMessage = "Faied to load movies. Please try again"
+        AppLogger.log(
+            "ViewModel Error: Failed to load movies with error: \(error)",
+            category: .business,
+            level: OSLogType.error
+        )
     }
 
 }

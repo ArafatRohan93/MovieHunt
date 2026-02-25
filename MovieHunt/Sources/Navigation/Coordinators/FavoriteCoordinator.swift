@@ -18,7 +18,14 @@ final class FavoriteCoordinator: Coordinator {
     }
 
     func start() {
-        let favoriteView = Text("Favorite View")
+        let favoriteRepository = FavoritesRepository()
+        let favoriteViewModel = FavoritesViewModel(repository: favoriteRepository)
+        
+        let favoriteView = FavoritesView(viewModel: favoriteViewModel){
+            [weak self] movie in
+            self?.showMovieDetails(for: movie)
+        }
+        
         let favoriteHostingController = UIHostingController(
             rootView: favoriteView
         )
@@ -27,5 +34,9 @@ final class FavoriteCoordinator: Coordinator {
             favoriteHostingController,
             animated: true
         )
+    }
+    
+    func showMovieDetails(for movie: Movie){
+        
     }
 }

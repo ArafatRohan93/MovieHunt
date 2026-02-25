@@ -52,10 +52,12 @@ final class MovieCoordinator: Coordinator {
         )
 
         let movieRepository = MovieRepository()
+        let favoritesRepository = FavoritesRepository()
 
         let viewModel = MovieDetailsViewModel(
             movieID: movie.id,
-            repository: movieRepository
+            repository: movieRepository,
+            favoritesRepository: favoritesRepository
         )
 
         let view = MovieDetailsView(viewModel: viewModel)

@@ -56,7 +56,7 @@ final class FavoritesRepository: FavoritesRepositoryProtocol {
     }
 
     @MainActor
-    func fetchFavorites() async -> [Movie] {
+    func fetchFavorites() async throws -> [Movie] {
         let descriptor = FetchDescriptor<FavoriteRecord>(sortBy: [
             SortDescriptor(\.addedDate, order: .reverse)
         ])
@@ -80,7 +80,7 @@ final class FavoritesRepository: FavoritesRepositoryProtocol {
                 "Favorite Repository: Failed to fetch favorites: \(error.localizedDescription)",
                 category: .storage,
             )
-            fatalError("Failed to initialize SwiftData: \(error)")
+            throw error
         }
     }
 }
