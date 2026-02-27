@@ -14,13 +14,15 @@ final class FavoriteRecord {
     var title: String
     var posterPath: String?
     var voteAverage: Double
+    var overview: String?
     var addedDate: Date
 
-    init(id: Int, title: String, posterPath: String?, voteAverage: Double) {
+    init(id: Int, title: String, overview: String?, posterPath: String?, voteAverage: Double) {
         self.id = id
         self.title = title
         self.posterPath = posterPath
         self.voteAverage = voteAverage
+        self.overview = overview
         self.addedDate = Date()
     }
 }

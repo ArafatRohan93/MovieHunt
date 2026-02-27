@@ -10,9 +10,9 @@ import SwiftData
 
 final class FavoritesRepository: FavoritesRepositoryProtocol {
     private let container: ModelContainer
-    
+
     @MainActor
-    private var context: ModelContext{
+    private var context: ModelContext {
         container.mainContext
     }
 
@@ -32,7 +32,7 @@ final class FavoritesRepository: FavoritesRepositoryProtocol {
         let count = (try? context.fetchCount(descriptor)) ?? 0
         return count > 0
     }
-    
+
     @MainActor
     func toggleFavorite(movie: Movie) async {
         let isFav = (try? await isFavorite(movieID: movie.id)) ?? false
@@ -47,6 +47,7 @@ final class FavoritesRepository: FavoritesRepositoryProtocol {
             let record = FavoriteRecord(
                 id: movie.id,
                 title: movie.title,
+                overview: movie.overview,
                 posterPath: movie.posterPath,
                 voteAverage: movie.voteAverage
             )
@@ -68,7 +69,7 @@ final class FavoritesRepository: FavoritesRepositoryProtocol {
                 Movie(
                     id: record.id,
                     title: record.title,
-                    overview: "",
+                    overview: record.overview ?? "",
                     posterPath: record.posterPath,
                     releaseDate: nil,
                     voteAverage: record.voteAverage

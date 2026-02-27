@@ -37,6 +37,21 @@ final class FavoriteCoordinator: Coordinator {
     }
     
     func showMovieDetails(for movie: Movie){
+        AppLogger.log("FavoriteCoordinator: Opening movie details for \(movie.title)", category: .navigation)
         
+        let favoriteRepository = FavoritesRepository()
+        let movieRepository = MovieRepository()
+        let movieDetailsViewModel = MovieDetailsViewModel(
+            movieID: movie.id,
+            repository: movieRepository,
+            favoritesRepository: favoriteRepository
+        )
+        
+        let movieDView = MovieDetailsView(viewModel: movieDetailsViewModel)
+        
+        let detailsHostingController = UIHostingController(rootView: movieDView)
+        
+        navigationController.pushViewController(detailsHostingController, animated: true)
+            
     }
 }
